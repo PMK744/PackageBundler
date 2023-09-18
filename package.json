@@ -1,7 +1,7 @@
 {
-  "name": "compressor",
+  "name": "package-bundler",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bundle any project into a small and fast binary format file",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,12 +9,20 @@
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "dev": "cross-env NODE_ENV=development ts-node src/index.ts"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "PMK744",
+  "license": "./LICENSE",
   "dependencies": {
     "cross-env": "^7.0.3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
-    "zip-lib": "^0.7.3"
-  }
+    "typescript": "^5.2.2"
+  },
+  "typings": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ]
 }
