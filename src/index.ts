@@ -5,10 +5,12 @@ import zlib from 'zlib'
 import { resolve, join } from 'path'
 
 class PackageBundler {
+  public readonly ignore: string[]
   private readonly files: Map<string, File>
   private readonly folders: Map<string, Folder>
 
-  public constructor() {
+  public constructor(ignore?: string[]) {
+    this.ignore = ignore ?? []
     this.files = new Map<string, File>()
     this.folders = new Map<string, Folder>()
   }
@@ -101,6 +103,7 @@ class PackageBundler {
       const name = element.split('name=')[1]?.split(' ')[0]
       const type = element.split('type=')[1]?.split(' ')[0]
       const folder = element.split('folder=')[1]?.split(' ')[0]
+      if (name === 'node_modules') continue
       if (type === 'folder' && !folder) {
         plugin.folders.set(name, { name, files: [] })
       } else if (type === 'folder' && folder) {
@@ -133,6 +136,7 @@ class PackageBundler {
       const trim = folder.replace(resolve(path), '').substring(1)
       const split = trim.split('\\')
       const last = split[split.length - 1]
+      if (last === 'node_modules') continue
       if (split.length === 1) {
         plugin.folders.set(last, { name: last, files: [] })
       } else {
