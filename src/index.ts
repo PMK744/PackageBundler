@@ -133,10 +133,10 @@ class PackageBundler {
     const folders = dir.filter(file => fs.lstatSync(file).isDirectory())
     const files = dir.filter(file => fs.lstatSync(file).isFile())
     for (const folder of folders) {
+      if (folder.includes('node_modules')) continue
       const trim = folder.replace(resolve(path), '').substring(1)
       const split = trim.split('\\')
       const last = split[split.length - 1]
-      if (last === 'node_modules') continue
       if (split.length === 1) {
         plugin.folders.set(last, { name: last, files: [] })
       } else {
